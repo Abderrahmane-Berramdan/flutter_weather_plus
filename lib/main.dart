@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_plus/screens/home_screen.dart';
+import 'package:flutter_weather_plus/provider/theme_provider.dart';
+import 'package:flutter_weather_plus/screens/splash_screen.dart';
+import 'package:flutter_weather_plus/theme/theme.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,7 +20,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: Provider.of<ThemeProvider>(context).themeMode,
+      home: SplashScreen(),
     );
   }
 }
