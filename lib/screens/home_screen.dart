@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_weather_plus/models/weather_model.dart';
 import 'package:flutter_weather_plus/provider/theme_provider.dart';
 import 'package:flutter_weather_plus/services/weather_service.dart';
+import 'package:flutter_weather_plus/widgets/details_column.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -99,12 +100,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        "${weatherModel!.location.name}, ${weatherModel!.location.country}",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          fontSize: 35,
-                          letterSpacing: 1,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          "${weatherModel!.location.name}, ${weatherModel!.location.country}",
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            fontSize: 30,
+                            letterSpacing: 1,
+                          ),
                         ),
                       ),
                       Text(
@@ -122,40 +128,63 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontSize: 17,
                         ),
                       ),
-                      Image.network(
-                        weatherModel!.current.condition.image,
-                        height: 200,
-                        width: 200,
-                      ),
+                      SizedBox(height: 7),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width - 40,
-                        height: 100,
-                        child: Card(child: 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                          Column(
-                            children: [
-                              Icon(Icons.water_drop),
-                              Text("${weatherModel!.current.humidity} %"),
-                              Text("Humidity")
-                            ],
+                        height: 190,
+                        width: 190,
+                        child: Image.network(
+                          "https:${weatherModel!.current.condition.image}",
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      SizedBox(height: 7),
+                      Container(
+                        width: MediaQuery.of(context).size.width - 20,
+                        height: 110,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              blurRadius: 15,
+                              spreadRadius: -15,
+                            ),
+                          ],
+                        ),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadiusGeometry.circular(20),
                           ),
-                          Column(
-                            children: [
-                              Icon(Icons.wind_power),
-                              Text("${weatherModel!.current.wind} Km/h"),
-                              Text("Wind")
-                            ],
+                          elevation: 0,
+                          color: Theme.of(context).primaryColor,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                DetailsColumn(
+                                  name: "Humidity",
+                                  value: weatherModel!.current.humidity
+                                      .toDouble(),
+                                  unity: "%",
+                                  image: "assets/humidity.png",
+                                ),
+                                DetailsColumn(
+                                  name: "Wind",
+                                  value: weatherModel!.current.wind,
+                                  unity: "Km/h",
+                                  image: "assets/windmill.png",
+                                ),
+                                DetailsColumn(
+                                  name: "Max temp",
+                                  value: weatherModel!.current.temp,
+                                  unity: "°C",
+                                  image: "assets/thermometer.png",
+                                ),
+                              ],
+                            ),
                           ),
-                          Column(
-                            children: [
-                              Icon(Icons.water_drop),
-                              Text("${weatherModel!.current.humidity} %"),
-                              Text("Max temp")
-                            ],
-                          )
-                        ])),
+                        ),
                       ),
                     ],
                   )
