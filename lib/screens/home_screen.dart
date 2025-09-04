@@ -3,6 +3,7 @@ import 'package:flutter_weather_plus/models/weather_model.dart';
 import 'package:flutter_weather_plus/provider/theme_provider.dart';
 import 'package:flutter_weather_plus/services/weather_service.dart';
 import 'package:flutter_weather_plus/widgets/details_column.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -177,13 +178,71 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 DetailsColumn(
                                   name: "Max temp",
-                                  value: weatherModel!.current.temp,
+                                  value: weatherModel!
+                                      .forecast
+                                      .forecastday[0]
+                                      .day
+                                      .maxtemp,
                                   unity: "°C",
                                   image: "assets/thermometer.png",
                                 ),
                               ],
                             ),
                           ),
+                        ),
+                      ),
+                      SizedBox(height: 30),
+
+                      SizedBox(
+                        height: 150,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount:
+                              weatherModel!.forecast.forecastday[0].hour.length,
+                          itemBuilder: (context, index) {
+                            Hour hour = weatherModel!
+                                .forecast
+                                .forecastday[0]
+                                .hour[index];
+                            String formattedTime = DateFormat(
+                              "hh:mm a",
+                            ).format(DateTime.parse(hour.time));
+                            return Container(
+                              padding: EdgeInsets.all(15),
+                              margin: EdgeInsets.symmetric(horizontal: 8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    formattedTime,
+                                    style: TextStyle(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.secondary,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Image.network(
+                                      "https:${hour.condition.image}",
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${hour.temp} °C",
+                                    style: TextStyle(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onPrimary,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],
