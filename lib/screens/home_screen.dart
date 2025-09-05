@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       isLoading = true;
     });
-    var response = await WeatherService.fechWeather();
+    var response = await WeatherService.getHourlyForecast();
     setState(() {
       weatherModel = response;
       isLoading = false;
@@ -129,19 +129,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontSize: 17,
                         ),
                       ),
+
                       SizedBox(height: 7),
                       SizedBox(
-                        height: 190,
-                        width: 190,
+                        height: 180,
+                        width: 180,
                         child: Image.network(
                           "https:${weatherModel!.current.condition.image}",
                           fit: BoxFit.contain,
                         ),
                       ),
-                      SizedBox(height: 7),
                       Container(
                         width: MediaQuery.of(context).size.width - 20,
-                        height: 110,
+                        height: 100,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           boxShadow: [
@@ -159,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           elevation: 0,
                           color: Theme.of(context).primaryColor,
                           child: Padding(
-                            padding: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -191,8 +191,44 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 30),
-
+                      SizedBox(height: 10),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border(
+                            top: BorderSide(
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Today Forecast",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.secondary,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            Text(
+                              "Weekly Forecast",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.onPrimary,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Divider(color: Theme.of(context).colorScheme.secondary),
+                      SizedBox(height: 10),
                       SizedBox(
                         height: 150,
                         child: ListView.builder(

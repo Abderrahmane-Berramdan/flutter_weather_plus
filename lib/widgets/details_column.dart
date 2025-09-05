@@ -20,14 +20,20 @@ class DetailsColumn extends StatelessWidget {
       spacing: 5,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(width: 25, height: 25, child: Image.asset(image)),
+        SizedBox(width: 22, height: 22, child: Image.asset(image)),
         Text(
           "${name == "Humidity" ? value.toStringAsFixed(0) : value.toStringAsFixed(1)} $unity",
-          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.secondary,
+            fontSize: 13,
+          ),
         ),
         Text(
           name,
-          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontSize: 13,
+          ),
         ),
       ],
     );
