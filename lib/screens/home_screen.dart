@@ -191,9 +191,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 15),
                       Container(
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.symmetric(horizontal: 12),
                         decoration: BoxDecoration(
                           color: Theme.of(context).primaryColor,
                           borderRadius: BorderRadius.circular(20),
@@ -209,19 +209,24 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               "Today Forecast",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).colorScheme.secondary,
                                 letterSpacing: 1,
                               ),
                             ),
-                            Text(
-                              "Weekly Forecast",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.onPrimary,
-                                letterSpacing: 1,
+                            TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                "Weekly Forecast",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onPrimary,
+                                  letterSpacing: 1,
+                                ),
                               ),
                             ),
                           ],

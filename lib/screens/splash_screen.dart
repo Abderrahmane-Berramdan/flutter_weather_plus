@@ -61,34 +61,44 @@ class _SplashScreenState extends State<SplashScreen> {
                     color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width - 130,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _timer.cancel();
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(15),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Text(
-                        "Get Started",
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.secondary,
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final maxW = constraints.maxWidth.isFinite
+                        ? constraints.maxWidth
+                        : MediaQuery.of(context).size.width;
+                    final buttonWidth = (maxW - 50).clamp(0.0, maxW);
+                    return SizedBox(
+                      width: buttonWidth,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _timer.cancel();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomeScreen(),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Text(
+                            "Get Started",
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
               ],
             ),
