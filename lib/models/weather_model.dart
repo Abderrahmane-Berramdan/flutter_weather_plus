@@ -1,16 +1,14 @@
 class WeatherModel {
   final Location location;
-  final Current current;
+  final Current? current;
   final Forecast forecast;
-  WeatherModel({
-    required this.current,
-    required this.location,
-    required this.forecast,
-  });
+  WeatherModel({this.current, required this.location, required this.forecast});
 
   factory WeatherModel.fromJson(Map<String, dynamic> json) {
     return WeatherModel(
-      current: Current.fromJson(json["current"]),
+      current: json["current"] != null
+          ? Current.fromJson(json["current"])
+          : null,
       location: Location.fromJson(json["location"]),
       forecast: Forecast.fromJson(json["forecast"]),
     );
@@ -77,13 +75,15 @@ class Forecast {
 }
 
 class Forecastday {
+  final String date;
   final Day day;
   final List<Hour> hour;
 
-  Forecastday({required this.day, required this.hour});
+  Forecastday({required this.day, required this.hour, required this.date});
 
   factory Forecastday.fromJson(Map<String, dynamic> json) {
     return Forecastday(
+      date: json["date"],
       day: Day.fromJson(json["day"]),
       hour: (json["hour"] as List).map((hour) => Hour.fromJson(hour)).toList(),
     );
@@ -92,11 +92,17 @@ class Forecastday {
 
 class Day {
   final double maxtemp;
+  final double mintemp;
+  final Condition condition;
 
-  Day({required this.maxtemp});
+  Day({required this.maxtemp, required this.mintemp, required this.condition});
 
   factory Day.fromJson(Map<String, dynamic> json) {
-    return Day(maxtemp: json["maxtemp_c"]);
+    return Day(
+      maxtemp: json["maxtemp_c"],
+      mintemp: json["mintemp_c"],
+      condition: Condition.fromJson(json["condition"]),
+    );
   }
 }
 

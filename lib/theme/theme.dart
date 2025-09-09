@@ -18,6 +18,6 @@ final lightTheme = ThemeData(
     primary: const Color.fromARGB(31, 0, 0, 0),
     secondary: Colors.black,
     surface: Colors.black38,
-    onPrimary: Colors.black38,
+    onPrimary: const Color.fromARGB(144, 0, 0, 0),
   ),
 );
