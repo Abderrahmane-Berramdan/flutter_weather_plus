@@ -87,7 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 hintText: "Search City",
-                textStyle: WidgetStatePropertyAll(TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+                textStyle: WidgetStatePropertyAll(
+                  TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                ),
                 hintStyle: WidgetStateProperty.all(
                   TextStyle(color: Theme.of(context).colorScheme.surface),
                 ),
@@ -282,25 +284,34 @@ class _HomeScreenState extends State<HomeScreen> {
                                 .hour
                                 .length,
                             itemBuilder: (context, index) {
-                              Hour hour = weatherModel!
+                              final Hour hour = weatherModel!
                                   .forecast
                                   .forecastday[0]
                                   .hour[index];
-                              String formattedTime = DateFormat(
+                              final DateTime now = DateTime.now();
+                              final DateTime hourTime = DateTime.parse(
+                                hour.time,
+                              );
+                              final String formattedTime = DateFormat(
                                 "hh:mm a",
-                              ).format(DateTime.parse(hour.time));
+                              ).format(hourTime);
+                              final isCourrentHour =
+                                  now.hour == hourTime.hour &&
+                                  now.day == hourTime.day;
                               return Container(
                                 padding: EdgeInsets.all(15),
                                 margin: EdgeInsets.symmetric(horizontal: 8),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  color: Theme.of(context).colorScheme.primary,
+                                  color: isCourrentHour
+                                      ? Colors.orange[800]
+                                      : Theme.of(context).colorScheme.primary,
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      formattedTime,
+                                      isCourrentHour ? "Now" : formattedTime,
                                       style: TextStyle(
                                         color: Theme.of(
                                           context,
@@ -316,9 +327,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Text(
                                       "${hour.temp} °C",
                                       style: TextStyle(
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.onPrimary,
+                                        color: isCourrentHour
+                                            ? Theme.of(
+                                                context,
+                                              ).colorScheme.secondary
+                                            : Theme.of(
+                                                context,
+                                              ).colorScheme.onPrimary,
                                       ),
                                     ),
                                   ],

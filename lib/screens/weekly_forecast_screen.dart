@@ -79,6 +79,7 @@ class _WeeklyForecastScreenState extends State<WeeklyForecastScreen> {
         ),
         Text(
           weatherModel.current!.condition.text,
+          textAlign: TextAlign.center,
           style: TextStyle(
             color: Theme.of(context).colorScheme.surface,
             fontSize: 20,
